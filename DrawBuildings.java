@@ -8,10 +8,7 @@ public class DrawBuildings extends PApplet {
     private final int gridHeight = 10; // # of squares vertically
     private HashMap<String, int[]> buildings; // to store block color and size
 
-    public void settings() {
-        size(gridWidth * gridSize, gridHeight * gridSize);
-    }
-
+    @Override
     public void setup() {
         buildings = new HashMap<>();
 
@@ -24,8 +21,9 @@ public class DrawBuildings extends PApplet {
         displayBuildingAtGridLocation(1, 1, 0, 0, 255, 1);
     }
 
+    @Override
     public void draw() {
-        background(255);
+        background(255, 255, 255);
         drawGrid();
         // to draw buildings
         buildings.forEach((key, info) -> {
@@ -36,7 +34,7 @@ public class DrawBuildings extends PApplet {
     }
 
     // to draw the grid
-    private void drawGrid() {
+    public void drawGrid() {
         stroke(0);
         noFill();
         rect(0, 0, gridWidth * gridSize, gridHeight * gridSize);
@@ -48,12 +46,13 @@ public class DrawBuildings extends PApplet {
     }
 
     // to parse coordinates from string
-    private int[] parseCoordinates(String coord) {
+    public int[] parseCoordinates(String coord) {
         String[] parts = coord.split(",");
         return new int[]{Integer.parseInt(parts[0]), Integer.parseInt(parts[1])};
     }
 
-    public static void main(String[] args) {
-        PApplet.main("DrawBuildings");
-    }
+
+    //public static void main(String[] args) {
+     //   PApplet.main("DrawBuildings");
+    //}
 }
