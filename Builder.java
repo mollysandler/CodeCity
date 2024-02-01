@@ -14,9 +14,10 @@ public class Builder {
 
     public void addFromJSON( JSONObject properties ){
         String n = properties.keys().next();
-        int l = (Integer) properties.getJSONObject( n ).get( "loc" );
-        int h = (Integer) properties.getJSONObject( n ).get( "localVars" );  // colors randomized where data not given
+        int h = (Integer) properties.getJSONObject( n ).get( "loc" );
+        int l = (Integer) properties.getJSONObject( n ).get( "localVars" );  // colors randomized where data not given
         int[] color = new int[]{ (int) ( random()*255 ), (int) ( random()*255 ), (int) ( random()*255 ) };
+        if ( l == 0 ) l = 1;
         BuildingNode b = new BuildingNode( n, l, h, color );
         b.setPos( placeBuilding( b.length ) );
         buildings.add( b );
