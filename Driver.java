@@ -18,19 +18,23 @@ public class Driver extends PApplet {
 
     @Override
     public void setup() {
+        System.out.println("hello setup");
         buildings = new HashMap<>();
+        System.out.println(buildings);
         // red building of size 1 at (2,3)
-        build.displayBuildingAtGridLocation(2, 3, 255, 0, 0, 1);
+        build.displayBuildingAtGridLocation(buildings, 2, 3, 255, 0, 0, 1);
         // yellow building of size 2 at (5,5)
-        build.displayBuildingAtGridLocation(5, 5, 225, 225, 0, 2);
+        build.displayBuildingAtGridLocation(buildings, 5, 5, 225, 225, 0, 2);
         // blue building of size 1 at (1,1)
-        build.displayBuildingAtGridLocation(1, 1, 0, 0, 255, 1);
+        build.displayBuildingAtGridLocation(buildings, 1, 1, 0, 0, 255, 1);
+
     }
 
     @Override
     public void draw() {
+
         background(255, 255, 255);
-        build.drawGrid();
+        //build.drawGrid();
         // to draw buildings
         buildings.forEach((key, info) -> {
             fill(info[0], info[1], info[2]);
@@ -43,6 +47,5 @@ public class Driver extends PApplet {
         GitClone gitClone = new GitClone("git@github.com:aayushjoshi16/CS-Projects.git");
         gitClone.clone_repo();
         PApplet.main("Driver");
-
     }
 }
