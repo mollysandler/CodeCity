@@ -1,9 +1,25 @@
 import java.io.*;
 import java.nio.file.Files;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.*;
+import java.util.stream.Stream;
+
 import org.json.JSONObject;
 
+/**
+ * A Parsing class that parses a given file or directory and returns a jsonObject in the format of:
+ * {
+ *     File:{
+ *         loc:
+ *         local_vars:
+ *     }
+ * }
+ * @author Andy Duong
+ */
+
 public class Parsing {
+
     public static JSONObject loadData(String fileEntry){ //main method
 
         File inputFile = new File(fileEntry);
@@ -18,39 +34,55 @@ public class Parsing {
             files[0] = inputFile;
         }
 
-        assert files != null;
-        for(File file: files){ //for each file grab the json data from each class
+        Set<String> classNames = new HashSet<>();
+        //get a set of all the class names for counting local vars
+        for(File file: files){
+            String name = file.getName();
 
-            JSONObject classData = fileParser(file); //returns loc and localvars from class
-
-            result.put(file.getName(), classData); //add class with its respective data
-
+            classNames.add(name.replace(".java", ""));
         }
 
+        for(File file: files){ //for each file grab the json data from each class
+
+            JSONObject classData = fileParser(file, classNames); //returns loc and localvars from class
+
+            result.put(file.getName(), classData); //add class to its respective jsonObject
+
+        }
         return result;
 
     }
 
-    private static JSONObject fileParser(File inputFile){
+    private static JSONObject fileParser(File inputFile, Set<String> classNames){
         JSONObject classDetails = new JSONObject();
-        //JSONObject result = new JSONObject();
 
         try {
-
-            long lineCount = Files.lines(inputFile.toPath()).count();
+            int lineCount = 0;
+            int localCount = 0;
 
             //pattern for local variables
-            Pattern pattern = Pattern.compile("\\b(int|long|double|float|char|boolean|String)\\s+\\w+\\s*(=\\s*[^;]+)?;");
+            String reg_Types = "int|long|double|float|char|boolean|String";
+            String custom_Types = String.join("|", classNames);
+            String pattern1 = "\\b(" + reg_Types + (custom_Types.isEmpty() ? "" : "|" + custom_Types) + ")\\s+\\w+(\\s*=\\s*[^,;]+)?(\\s*,\\s*\\w+(\\s*=\\s*[^,;]+)?)*;";
+            Pattern pattern = Pattern.compile(pattern1);
 
-            //create a matcher that will find matches of a given pattern
-            Matcher matcher = pattern.matcher(Files.readString(inputFile.toPath()));
+            try (Stream<String> lines = Files.lines(inputFile.toPath())) {
+                for (String line : (Iterable<String>) lines::iterator) {
+                    // Increment line count
+                    lineCount++;
 
-            int localCount = 0;
-            while (matcher.find()) {
-                localCount++;
+                    //create a matcher for the current line that will find matches of the given pattern
+                    Matcher matcher = pattern.matcher(line);
+                    while (matcher.find()) {
+
+                        String match = matcher.group();
+                        // Count each variable declaration within the match
+                        int varCount = match.split(",").length;
+                        localCount += varCount;
+                    }
+                }
             }
-
-
+            //add details of current class to the current jsonObject
             classDetails.put("loc", lineCount);
             classDetails.put("localVars", localCount);
 
