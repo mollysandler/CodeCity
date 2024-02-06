@@ -1,5 +1,5 @@
 /**
- * @author
+ * @author jemma arona
  */
 
 public class BuildingNode {

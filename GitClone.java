@@ -3,7 +3,7 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 
 /**
- * @author
+ * @author aayush joshi
  */
 public class GitClone {
     private final String url;

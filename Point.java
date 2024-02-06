@@ -1,9 +1,8 @@
+/**
+ * @author aayush joshi
+ */
+
 class Point {
-
-    /**
-     * @author
-     */
-
     private final int x;
     private final int y;
 
@@ -15,9 +14,7 @@ class Point {
     public int getX() {
         return this.x;
     }
-
     public int getY() {
         return this.y;
     }
-
 }

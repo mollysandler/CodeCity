@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class DrawBuildings extends PApplet {
     /**
-     * @author
+     * @author riya badadare
      */
 
     private final int gridSize = 50; // size of each grid square
