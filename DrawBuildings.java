@@ -41,7 +41,8 @@ public class DrawBuildings extends PApplet {
 //    }
 
     // to display a colored block at a specific grid location
-    public void displayBuildingAtGridLocation(HashMap buildings, int gridX, int gridY, int colorR, int colorG, int colorB, int blockSize) {
+    public void displayBuildingAtGridLocation(HashMap buildings, int gridX, int gridY,
+                                              int colorR, int colorG, int colorB, int blockSize) {
         //System.out.println("hello display building");
         // debugging from thurs lab: when run from the driver, it gets to here and fails becuase
         buildings.put(gridX + "," + gridY, new int[]{colorR, colorG, colorB, blockSize});
