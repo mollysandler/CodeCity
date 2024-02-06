@@ -4,12 +4,12 @@ code-city
 
 
 Sprint Reqs:
-Load Problem Info - Aayush 
+Git Clone Function - Aayush 
 
 Draw World        - Jemma
 
 Draw Inst Blocks  - Riya
 
-Drag & Drop       - Andy
+Parsing       - Andy
 
 Integration & Driver Class      - Molly
