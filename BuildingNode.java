@@ -1,15 +1,34 @@
+/**
+ * @author
+ */
+
 public class BuildingNode {
-
-    public String name;
-    public Point pos;
-    public int length;
-    public int height;
+    private final String name;
+    private Point pos;
+    private final int length;
+    private final int height;
     public Point displayPos;
-    public int displayLength;
-    public int displayHeight;
-    public int[] color;
+    private int displayLength;
+    private int displayHeight;
+    private final int[] color;
 
-    public BuildingNode( String name, int len, int height, int[] color ) {
+    public int getLength() {return length;}
+    public int getHeight() {return height;}
+    public Point getDisplayPos() {return displayPos;}
+
+    public int getDisplayLength() {
+        return displayLength;
+    }
+
+    public int getDisplayHeight() {
+        return displayHeight;
+    }
+
+    public int[] getColor() {
+        return color;
+    }
+
+    public BuildingNode(String name, int len, int height, int[] color ) {
         this.name = name;
         this.length = len;
         displayLength = len;

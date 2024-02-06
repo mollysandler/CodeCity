@@ -1,13 +1,17 @@
 import org.json.JSONObject;
-import java.util.ArrayList;
-import java.util.Iterator;
-
+import java.util.*;
 import static java.lang.Math.*;
 
-public class Builder {
+/**
+ * @author
+ */
 
-    public ArrayList< BuildingNode > buildings;
-    public int x_wid, y_len, x_space, y_space;
+public class Builder {
+    private List <BuildingNode> buildings;
+    private int x_wid;
+    private int y_len;
+    private int x_space;
+    private int y_space;
 
     public Builder() {
         buildings = new ArrayList<>();
@@ -22,7 +26,7 @@ public class Builder {
             int l = (Integer) classes.getJSONObject(n).get("localVars");  // colors randomized where data not given
             int[] color = new int[]{(int) (random() * 255), (int) (random() * 255), (int) (random() * 255)};
             BuildingNode b = new BuildingNode(n, l, h, color);
-            b.setPos(placeBuilding(b.length));
+            b.setPos(placeBuilding(b.getLength()));
             buildings.add(b);
         }
     }
@@ -56,14 +60,7 @@ public class Builder {
         return pos;
     }
 
-    public ArrayList< BuildingNode > getBuildings( double l_scale, double h_scale ) {
-        for ( BuildingNode b : buildings ) {
-            b.setScale( l_scale, h_scale );
-        }
-        return buildings;
-    }
-
-    public ArrayList< BuildingNode > getBuildings() {
+    public List< BuildingNode > getBuildings() {
         return buildings;
     }
 }

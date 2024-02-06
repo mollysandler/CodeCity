@@ -20,8 +20,9 @@ import org.json.JSONObject;
 
 public class Parsing {
 
-    public static JSONObject loadData(String fileEntry){ //main method
+    public Parsing() {}
 
+    public static JSONObject loadData(String fileEntry){ //main method
         File inputFile = new File(fileEntry);
         JSONObject result = new JSONObject(); //result with classes and their details
         File[] files;
@@ -36,21 +37,17 @@ public class Parsing {
 
         Set<String> classNames = new HashSet<>();
         //get a set of all the class names for counting local vars
+        assert files != null;
         for(File file: files){
             String name = file.getName();
-
-            classNames.add(name.replace(".java", ""));
+            classNames.add(name.replace(".java", "")); //only takes java files for now
         }
 
         for(File file: files){ //for each file grab the json data from each class
-
             JSONObject classData = fileParser(file, classNames); //returns loc and localvars from class
-
             result.put(file.getName(), classData); //add class to its respective jsonObject
-
         }
         return result;
-
     }
 
     private static JSONObject fileParser(File inputFile, Set<String> classNames){
@@ -61,9 +58,11 @@ public class Parsing {
             int localCount = 0;
 
             //pattern for local variables
-            String reg_Types = "int|long|double|float|char|boolean|String";
-            String custom_Types = String.join("|", classNames);
-            String pattern1 = "\\b(" + reg_Types + (custom_Types.isEmpty() ? "" : "|" + custom_Types) + ")\\s+\\w+(\\s*=\\s*[^,;]+)?(\\s*,\\s*\\w+(\\s*=\\s*[^,;]+)?)*;";
+            String regTypes = "int|long|double|float|char|boolean|String";
+            String customTypes = String.join("|", classNames);
+            String pattern1 = "\\b(" + regTypes +
+                    (customTypes.isEmpty() ? "" : "|" + customTypes) +
+                    ")\\s+\\w+(\\s*=\\s*[^,;]+)?(\\s*,\\s*\\w+(\\s*=\\s*[^,;]+)?)*;";
             Pattern pattern = Pattern.compile(pattern1);
 
             try (Stream<String> lines = Files.lines(inputFile.toPath())) {
@@ -88,12 +87,9 @@ public class Parsing {
 
             return classDetails;
 
-
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
-
     }
-
 }

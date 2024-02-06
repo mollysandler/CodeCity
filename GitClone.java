@@ -2,17 +2,18 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 
+/**
+ * @author
+ */
 public class GitClone {
-
-    private String url;
+    private final String url;
 
     public GitClone(String url) {
         this.url = url;
     }
 
-    public void clone_repo() {
+    public void cloneRepo() {
         String command = "git clone " + this.url;
-
         Process process = null;
         try {
             process = Runtime.getRuntime().exec(command);
