@@ -18,7 +18,6 @@ public class Builder {
         Iterator<String> keys = classes.keys();
         while ( keys.hasNext() ) {
             String n = keys.next();
-            System.out.println(n);
             int h = (Integer) classes.getJSONObject(n).get("loc");
             int l = (Integer) classes.getJSONObject(n).get("localVars");  // colors randomized where data not given
             int[] color = new int[]{(int) (random() * 255), (int) (random() * 255), (int) (random() * 255)};
